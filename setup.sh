@@ -10,11 +10,9 @@ if [ ! -f "$ENABLED_SERVICES_FILE" ]; then
 fi
 echo "✅ Found configuration: $ENABLED_SERVICES_FILE"
 
-# Initialize and update git submodules
-echo "Initializing git submodules..."
-git submodule sync --recursive
-git submodule update --init --recursive --remote
-echo "✅ Git submodules initialized"
+# Mark local config files as assume-unchanged to prevent accidental commits
+git update-index --assume-unchanged config.env 2>/dev/null || true
+git update-index --assume-unchanged kind/config/kindkubeconfig.yaml 2>/dev/null || true
 
 # Parse command line arguments
 AUTO_YES=false
